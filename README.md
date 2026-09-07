@@ -1,5 +1,7 @@
 # AI Meeting Summarizer (NLP)
 
+[![CI](https://github.com/Mounika-Reddy-0802/AI-Meeting-Summarizer-NLP/actions/workflows/ci.yml/badge.svg)](https://github.com/Mounika-Reddy-0802/AI-Meeting-Summarizer-NLP/actions/workflows/ci.yml)
+
 A web app where a user uploads or records a meeting, **Deepgram** converts speech to text (with
 speaker labels), and **our own fine-tuned NLP model** (Flan-T5, trained on Kaggle GPUs) produces the
 summary. Action-item extraction and semantic search are our own code as well. The backend is
