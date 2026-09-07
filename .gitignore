@@ -6,8 +6,10 @@ __pycache__/
 .venv/
 node_modules/
 .next/
-data/
-!data/README.md
+# "data/" would exclude the directory itself, and git cannot re-include a file
+# whose parent directory is excluded - so ignore the contents instead.
+/data/*
+!/data/README.md
 ml/checkpoints/
 *.db
 *.wav
