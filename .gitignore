@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.next/
+data/
+!data/README.md
+ml/checkpoints/
+*.db
+*.wav
+*.mp3
+*.m4a
+*.webm
+!demo/sample_audio/*
+.ipynb_checkpoints/
+
+# per-laptop, set by each member
+.claude/member
+
+# local planning sources, not part of the PROJECT_PLAN.md §2 layout
+AI_Meeting_Summarizer_Plan.docx
+CLAUDE_CODE_PROMPTS.md
