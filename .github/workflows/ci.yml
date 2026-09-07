@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+
+jobs:
+  backend:
+    name: backend (ruff + pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check whether backend/ exists yet
+        id: exists
+        run: |
+          if [ -f backend/requirements.txt ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "backend/ not created yet (Week 1) - skipping"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.exists.outputs.ready == 'true'
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff pytest
+
+      - name: ruff
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: backend
+        run: ruff check .
+
+      - name: pytest
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: backend
+        run: pytest -q
+
+  frontend:
+    name: frontend (tsc + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check whether frontend/ exists yet
+        id: exists
+        run: |
+          if [ -f frontend/package.json ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "frontend/ not created yet (Week 1) - skipping"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.exists.outputs.ready == 'true'
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: frontend
+        run: npm ci
+
+      - name: tsc --noEmit
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: frontend
+        run: npx tsc --noEmit
+
+      - name: next build
+        if: steps.exists.outputs.ready == 'true'
+        working-directory: frontend
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000
+
+  secrets-guard:
+    name: no secrets or binaries in the diff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reject forbidden files
+        run: |
+          bad=$(git ls-files \
+            | grep -E '(^|/)\.env($|\.)|\.db$|\.wav$|\.mp3$|\.m4a$|\.webm$|^ml/checkpoints/' \
+            | grep -v '\.env\.example$' \
+            | grep -v '^demo/sample_audio/' || true)
+          if [ -n "$bad" ]; then
+            echo "Forbidden files tracked in git (GIT_RULES.md §7):"
+            echo "$bad"
+            exit 1
+          fi
+          echo "clean"
