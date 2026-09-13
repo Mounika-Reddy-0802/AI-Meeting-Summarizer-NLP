@@ -1,3 +1,3 @@
 # baselines/
 
-Offline-only baselines such as gemini_baseline.py. Never called from the app.
+Offline-only baselines such as llm_baseline.py. Never imported by backend/ or called from the app.

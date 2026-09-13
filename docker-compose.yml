@@ -1,6 +1,6 @@
-# Placeholder — the real compose file is Mounika's Week 3 task
-# (PROJECT_PLAN.md §7 "week3-mounika-docker-release"): backend + frontend services,
-# a volume for the downloaded model checkpoint, and env passthrough from .env.
+# Placeholder — the real compose file is Mounika's Week 4 task
+# (PROJECT_PLAN.md §8 "week4-mounika-docker-release"): backend + frontend services,
+# a volume for the downloaded models (MODEL_DIR), and env passthrough from .env.
 #
 # Until then, run the two services in separate terminals as described in
 # backend/README.md and frontend/README.md.

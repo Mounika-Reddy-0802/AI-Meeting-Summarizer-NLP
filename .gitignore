@@ -1,20 +1,95 @@
+# secrets - real values live only in local env files
 .env
 .env.*
 !.env.example
-__pycache__/
-*.pyc
-.venv/
-node_modules/
-.next/
-# "data/" would exclude the directory itself, and git cannot re-include a file
-# whose parent directory is excluded - so ignore the contents instead.
+# per-member github credentials for this shared laptop - local only
+.git.env*
+kaggle.json
+*.pem
+*.key
+
+# data - "data/" would exclude the directory itself, and git cannot re-include
+# a file whose parent directory is excluded - so ignore the contents instead
 /data/*
 !/data/README.md
+backend/data/
+
+# model weights and caches (MODEL_DIR, hugging face, torch)
 ml/checkpoints/
+/models/
+.cache/
+hf_cache/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+wandb/
+runs/
+lightning_logs/
+
+# databases
 *.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# audio and video - demo/sample_audio/ is the only tracked audio
 *.wav
 *.mp3
 *.m4a
 *.webm
+*.flac
+*.ogg
+*.opus
+*.aac
+*.wma
+*.mp4
 !demo/sample_audio/*
+
+# notebooks - output cells are stripped by nbstripout, not by this file
 .ipynb_checkpoints/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# node / next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# local document copies and word lock files; exported demo samples allowed
+*.docx
+~$*
+!demo/**/*.docx
+
+# logs, scratch, local overrides
+*.log
+tmp/
+docker-compose.override.yml
+
+# os and editor
+Thumbs.db
+desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+.vscode/
+.idea/
+*.swp
