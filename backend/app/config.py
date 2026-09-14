@@ -1,5 +1,6 @@
 """Application settings, read from environment variables and backend/.env."""
 
+import os
 from functools import lru_cache
 from pathlib import Path
 
@@ -29,6 +30,8 @@ class Settings(BaseSettings):
     model_dir: Path = REPO_DIR / "models"
     whisper_size: str = "small"
     max_audio_minutes: int = 60
+    # drop um/uh-style fillers from stored segments; backchannels are always kept
+    filler_cleanup: bool = False
 
     cors_origins: list[str] = ["http://localhost:3000"]
 
@@ -53,3 +56,17 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     """Return the process-wide settings instance."""
     return Settings()
+
+
+def apply_model_env(settings: Settings, offline: bool = True) -> None:
+    """Point every model library's cache at MODEL_DIR; with offline=True forbid downloads.
+
+    Must run before faster-whisper, pyannote, transformers or sentence-transformers are imported.
+    """
+    os.environ["HF_HOME"] = str(settings.model_dir / "huggingface")
+    os.environ["PYANNOTE_CACHE"] = str(settings.model_dir / "pyannote")
+    os.environ["TORCH_HOME"] = str(settings.model_dir / "torch")
+    os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+    flag = "1" if offline else "0"
+    os.environ["HF_HUB_OFFLINE"] = flag
+    os.environ["TRANSFORMERS_OFFLINE"] = flag
