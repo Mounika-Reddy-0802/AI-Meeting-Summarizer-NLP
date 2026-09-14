@@ -6,9 +6,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import get_settings
+from app.config import apply_model_env, get_settings
 from app.db import init_db
-from app.routes import auth, search
+from app.routes import auth, meetings, search
 
 
 @asynccontextmanager
@@ -24,6 +24,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 def create_app() -> FastAPI:
     """Build the application with middleware and routers attached."""
     settings = get_settings()
+    apply_model_env(settings, offline=True)
     app = FastAPI(title="AI Meeting Summarizer API", version="0.1.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
@@ -33,6 +34,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(auth.router)
+    app.include_router(meetings.router)
     app.include_router(search.router)
 
     @app.get("/health")

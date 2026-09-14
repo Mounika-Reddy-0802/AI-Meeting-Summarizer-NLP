@@ -3,13 +3,19 @@
 `entailment`, `supported` and `faithfulness.score` are null until the linking stage has run.
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
+from typing import Annotated
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AfterValidator, BaseModel, ConfigDict, Field
 
 from app.models import MeetingStatus
 
 EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+
+# SQLite returns naive datetimes; every stored time is UTC, so say so in the response
+UTCDateTime = Annotated[
+    datetime, AfterValidator(lambda v: v if v.tzinfo else v.replace(tzinfo=UTC))
+]
 
 
 class ORMModel(BaseModel):
@@ -45,7 +51,7 @@ class UploadOut(BaseModel):
 class MeetingListItem(ORMModel):
     id: int
     title: str
-    created_at: datetime
+    created_at: UTCDateTime
     status: MeetingStatus
     summary_snippet: str | None = None
 

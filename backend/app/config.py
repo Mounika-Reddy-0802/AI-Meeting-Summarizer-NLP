@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     model_dir: Path = REPO_DIR / "models"
     whisper_size: str = "small"
     max_audio_minutes: int = 60
+    max_upload_mb: int = 500
     # drop um/uh-style fillers from stored segments; backchannels are always kept
     filler_cleanup: bool = False
 
