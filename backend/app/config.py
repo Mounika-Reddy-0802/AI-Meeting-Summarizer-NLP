@@ -68,6 +68,7 @@ def apply_model_env(settings: Settings, offline: bool = True) -> None:
     os.environ["PYANNOTE_CACHE"] = str(settings.model_dir / "pyannote")
     os.environ["TORCH_HOME"] = str(settings.model_dir / "torch")
     os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+    os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
     flag = "1" if offline else "0"
     os.environ["HF_HUB_OFFLINE"] = flag
     os.environ["TRANSFORMERS_OFFLINE"] = flag

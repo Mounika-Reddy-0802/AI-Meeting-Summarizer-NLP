@@ -22,6 +22,17 @@ PYANNOTE_TERMS = [
     "https://huggingface.co/pyannote/segmentation-3.0",
 ]
 HUB_MODELS = ["sentence-transformers/all-MiniLM-L6-v2", "cross-encoder/nli-deberta-v3-base"]
+# only the PyTorch weights are used; skip the other runtimes' copies
+SKIP_FILES = [
+    "onnx/*",
+    "openvino/*",
+    "*.onnx",
+    "*.h5",
+    "*.msgpack",
+    "*.ot",
+    "tf_model*",
+    "flax_model*",
+]
 
 
 class DownloadSettings(BaseSettings):
@@ -55,7 +66,7 @@ def main() -> int:
 
     for i, repo_id in enumerate(HUB_MODELS, start=2):
         print(f"[{i}/4] {repo_id}")
-        snapshot_download(repo_id)
+        snapshot_download(repo_id, ignore_patterns=SKIP_FILES)
 
     failed = False
     if args.skip_pyannote:
