@@ -80,7 +80,7 @@ async def _save_upload(file: UploadFile, max_bytes: int) -> Path:
             out.write(chunk)
     if size == 0:
         path.unlink(missing_ok=True)
-        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, detail="The file is empty")
+        raise HTTPException(422, detail="The file is empty")
     return path
 
 
