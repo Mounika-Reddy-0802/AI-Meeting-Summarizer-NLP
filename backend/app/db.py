@@ -33,9 +33,7 @@ def _make_engine(url: str) -> Engine:
 
     @event.listens_for(engine, "connect")
     def _enable_foreign_keys(dbapi_connection: Any, _record: Any) -> None:
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.close()
+        dbapi_connection.execute("PRAGMA foreign_keys=ON")
 
     return engine
 
