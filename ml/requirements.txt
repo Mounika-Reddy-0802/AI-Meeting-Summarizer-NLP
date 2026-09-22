@@ -1,0 +1,27 @@
+# Python 3.11. Used on Kaggle for training and on laptops for evaluation and data checks.
+# Kaggle images already ship a CUDA torch; laptops install the CPU wheel:
+#   pip install --extra-index-url https://download.pytorch.org/whl/cpu -r ml/requirements.txt
+torch>=2.5,<2.9
+# 4.46 renamed the trainer's tokenizer argument to processing_class
+transformers>=4.46,<5
+# datasets 4 drops loading scripts; 3.x keeps the parquet mirrors and scripts working
+datasets>=3.0,<4
+accelerate>=1.0,<2
+peft>=0.13,<1
+sentencepiece>=0.2,<1
+huggingface_hub>=0.25,<1
+
+# metrics
+rouge-score==0.1.2
+bert-score>=0.3.13,<0.4
+evaluate>=0.4.3,<1
+nltk>=3.9,<4
+
+# baselines, data and analysis
+networkx>=3.3,<4
+# networkx pagerank needs scipy
+scipy>=1.13,<2
+pandas>=2.2,<3
+lxml>=5.3,<7
+
+pytest>=8,<9
