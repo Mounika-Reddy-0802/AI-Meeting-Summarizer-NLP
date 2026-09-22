@@ -1,0 +1,80 @@
+{
+  "meetings": [
+    {
+      "id": 1,
+      "title": "Sprint planning - week 1",
+      "created_at": "2026-09-14T09:30:00Z",
+      "status": "done",
+      "participants": ["Speaker 1", "Speaker 2", "Speaker 3"],
+      "summary": "The team agreed to ship the upload flow first and keep the summariser stub until the SAMSum checkpoint is ready. Speaker 2 will finish the meeting page by Thursday and Speaker 3 raised that diarisation is slow on laptops.",
+      "minutes": {
+        "decisions": [
+          { "id": 101, "text": "Ship the upload flow before the recorder.", "evidence": [2, 3], "entailment": 0.91, "supported": true },
+          { "id": 102, "text": "Keep the summariser stub until the SAMSum checkpoint is on the Hub.", "evidence": [4], "entailment": 0.84, "supported": true }
+        ],
+        "actions": [
+          { "id": 103, "text": "Speaker 2 will finish the meeting page by Thursday.", "evidence": [5], "entailment": 0.88, "supported": true },
+          { "id": 104, "text": "Speaker 1 will record three sample meetings.", "evidence": [], "entailment": 0.32, "supported": false }
+        ],
+        "problems": [
+          { "id": 105, "text": "Diarisation takes several minutes on a laptop CPU.", "evidence": [7, 8], "entailment": 0.79, "supported": true }
+        ]
+      },
+      "segments": [
+        { "id": 1, "speaker": "Speaker 1", "start_sec": 0.0, "end_sec": 6.4, "text": "Okay, let's start. The goal this week is one recording going all the way to a summary on screen.", "dialogue_act": null },
+        { "id": 2, "speaker": "Speaker 1", "start_sec": 6.4, "end_sec": 12.1, "text": "I think we should get upload working before the browser recorder.", "dialogue_act": null },
+        { "id": 3, "speaker": "Speaker 2", "start_sec": 12.8, "end_sec": 17.5, "text": "Yeah, agreed. Upload first, the recorder is just a blob on top of the same route.", "dialogue_act": null },
+        { "id": 4, "speaker": "Speaker 3", "start_sec": 18.0, "end_sec": 26.2, "text": "The summariser returns the first three segments for now. The real checkpoint lands once the Kaggle run finishes.", "dialogue_act": null },
+        { "id": 5, "speaker": "Speaker 2", "start_sec": 26.9, "end_sec": 32.0, "text": "I'll have the meeting page with the minutes tabs done by Thursday.", "dialogue_act": null },
+        { "id": 6, "speaker": "Speaker 1", "start_sec": 32.3, "end_sec": 33.0, "text": "Great.", "dialogue_act": null },
+        { "id": 7, "speaker": "Speaker 3", "start_sec": 33.6, "end_sec": 40.8, "text": "One problem: pyannote on my laptop took almost four minutes for a three minute clip.", "dialogue_act": null },
+        { "id": 8, "speaker": "Speaker 3", "start_sec": 40.8, "end_sec": 46.0, "text": "So the live demo should use a short clip and the long ones get pre-processed.", "dialogue_act": null },
+        { "id": 9, "speaker": "Speaker 2", "start_sec": 46.5, "end_sec": 50.2, "text": "Makes sense. Let's write that down as a decision on Friday.", "dialogue_act": null }
+      ],
+      "action_items": [
+        { "text": "Finish the meeting page with the minutes tabs", "owner": "Speaker 2", "due": "Thursday", "source_segment_id": 5, "confidence": 0.86 },
+        { "text": "Use a short clip for the live demo", "owner": null, "due": null, "source_segment_id": 8, "confidence": 0.61 }
+      ],
+      "faithfulness": { "score": 0.75, "unsupported_count": 1 }
+    },
+    {
+      "id": 2,
+      "title": "Design review - evidence panel",
+      "created_at": "2026-09-14T11:05:00Z",
+      "status": "summarizing",
+      "participants": ["Speaker 1", "Speaker 2"],
+      "summary": null,
+      "minutes": { "decisions": [], "actions": [], "problems": [] },
+      "segments": [
+        { "id": 20, "speaker": "Speaker 1", "start_sec": 0.0, "end_sec": 5.0, "text": "Can we see the supporting turns next to each sentence?", "dialogue_act": null },
+        { "id": 21, "speaker": "Speaker 2", "start_sec": 5.4, "end_sec": 11.0, "text": "Yes, clicking a sentence opens the evidence panel with entailment bars.", "dialogue_act": null }
+      ],
+      "action_items": [],
+      "faithfulness": { "score": null, "unsupported_count": 0 }
+    },
+    {
+      "id": 3,
+      "title": "Too long recording",
+      "created_at": "2026-09-13T16:40:00Z",
+      "status": "failed",
+      "participants": [],
+      "summary": null,
+      "minutes": { "decisions": [], "actions": [], "problems": [] },
+      "segments": [],
+      "action_items": [],
+      "faithfulness": { "score": null, "unsupported_count": 0 }
+    }
+  ],
+  "statuses": [
+    { "id": 1, "status": "done", "stage": null, "elapsed_sec": 212.4 },
+    { "id": 2, "status": "summarizing", "stage": "summarizing", "elapsed_sec": 95.0 },
+    { "id": 3, "status": "failed", "stage": "audio failed: audio is 61.0 min; the limit is 60 min", "elapsed_sec": 1.2 }
+  ],
+  "evidence": [
+    { "sentence_id": 101, "segment_id": 2, "speaker": "Speaker 1", "text": "I think we should get upload working before the browser recorder.", "entailment": 0.91 },
+    { "sentence_id": 101, "segment_id": 3, "speaker": "Speaker 2", "text": "Yeah, agreed. Upload first, the recorder is just a blob on top of the same route.", "entailment": 0.77 },
+    { "sentence_id": 102, "segment_id": 4, "speaker": "Speaker 3", "text": "The summariser returns the first three segments for now. The real checkpoint lands once the Kaggle run finishes.", "entailment": 0.84 },
+    { "sentence_id": 103, "segment_id": 5, "speaker": "Speaker 2", "text": "I'll have the meeting page with the minutes tabs done by Thursday.", "entailment": 0.88 },
+    { "sentence_id": 105, "segment_id": 7, "speaker": "Speaker 3", "text": "One problem: pyannote on my laptop took almost four minutes for a three minute clip.", "entailment": 0.79 }
+  ]
+}
