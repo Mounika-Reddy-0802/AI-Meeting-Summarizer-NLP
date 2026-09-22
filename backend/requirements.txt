@@ -1,0 +1,32 @@
+# Python 3.11. CPU wheels for torch so laptops, CI and docker do not pull CUDA builds.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# api, db, auth
+fastapi>=0.115,<1
+uvicorn[standard]>=0.32,<1
+sqlalchemy>=2.0.36,<2.1
+pydantic-settings>=2.6,<3
+python-jose[cryptography]>=3.3,<4
+passlib[bcrypt]>=1.7.4,<1.8
+# passlib 1.7 breaks on bcrypt >= 4.1
+bcrypt>=4.0.1,<4.1
+python-multipart>=0.0.12
+
+# local asr + diarisation (audio decoding needs the ffmpeg binary on PATH)
+faster-whisper>=1.1,<2
+pyannote.audio>=3.3,<4
+# torchaudio 2.9 drops the audio backends pyannote 3.x uses
+torch>=2.5,<2.9
+torchaudio>=2.5,<2.9
+
+# summarisation, tagging, search, evidence
+transformers>=4.44,<5
+sentence-transformers>=3.1,<4
+rank-bm25==0.2.2
+numpy>=1.26,<2
+
+# export
+python-docx>=1.1,<2
+
+# tests (fastapi TestClient)
+httpx>=0.27,<1
